@@ -1,0 +1,282 @@
+VERSION 5.00
+Begin VB.PropertyPage ppgControl 
+   Caption         =   "Allgemein"
+   ClientHeight    =   2640
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   6000
+   BeginProperty Font 
+      Name            =   "Arial"
+      Size            =   7.8
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
+   HelpContextID   =   12
+   LockControls    =   -1  'True
+   PaletteMode     =   0  'Rasterbild
+   ScaleHeight     =   2640
+   ScaleWidth      =   6000
+   Begin VB.TextBox txtWidth 
+      Height          =   360
+      Left            =   2156
+      TabIndex        =   8
+      Text            =   "0"
+      Top             =   600
+      Width           =   840
+   End
+   Begin VB.TextBox txtHeight 
+      Height          =   360
+      Left            =   2156
+      TabIndex        =   7
+      Text            =   "0"
+      Top             =   144
+      Width           =   840
+   End
+   Begin VB.CheckBox chkMaskColor 
+      Caption         =   "&UseMaskColor"
+      Height          =   240
+      Left            =   140
+      TabIndex        =   4
+      Top             =   1584
+      Value           =   1  'Aktiviert
+      Width           =   2208
+   End
+   Begin VB.OptionButton optSize 
+      Caption         =   "Benut&zerdefiniert"
+      Height          =   220
+      Index           =   3
+      Left            =   140
+      TabIndex        =   3
+      Top             =   1104
+      Value           =   -1  'True
+      Width           =   1656
+   End
+   Begin VB.OptionButton optSize 
+      Caption         =   "&48 x 48"
+      Height          =   220
+      Index           =   2
+      Left            =   140
+      TabIndex        =   2
+      Top             =   816
+      Width           =   1130
+   End
+   Begin VB.OptionButton optSize 
+      Caption         =   "&32 x 32"
+      Height          =   220
+      Index           =   1
+      Left            =   140
+      TabIndex        =   1
+      Top             =   528
+      Width           =   1130
+   End
+   Begin VB.OptionButton optSize 
+      Caption         =   "&16 x 16"
+      Height          =   220
+      Index           =   0
+      Left            =   140
+      TabIndex        =   0
+      Top             =   240
+      Width           =   1130
+   End
+   Begin VB.Label lblWidth 
+      Caption         =   "&Width:"
+      Height          =   240
+      Left            =   1508
+      TabIndex        =   6
+      Top             =   648
+      Width           =   600
+   End
+   Begin VB.Label lblHeight 
+      Caption         =   "&Height:"
+      Height          =   240
+      Left            =   1508
+      TabIndex        =   5
+      Top             =   240
+      Width           =   576
+   End
+End
+Attribute VB_Name = "ppgControl"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+Private Type RECT
+        Left As Long
+        Top As Long
+        Right As Long
+        Bottom As Long
+End Type
+Private Declare Function EnumChildWindows Lib "user32" (ByVal hWndParent As Long, ByVal lpEnumFunc As Long, ByVal lParam As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Private GoBack As Boolean
+Private oldw As Long
+Private oldh As Long
+
+Private Sub chkMaskColor_Click()
+Changed = True
+End Sub
+
+Private Sub optSize_Click(Index As Integer)
+Dim Sizetyp As Long
+If Anzahl > 0 Then
+Sizetyp = GetTyp
+If Index <> Sizetyp Then
+MsgBox EMsg
+optSize(Sizetyp).Value = True
+
+Exit Sub
+End If
+Else
+Select Case Index
+Case 0
+cx = 16
+cy = 16
+Case 1
+cx = 32
+cy = 32
+Case 2
+cx = 48
+cy = 48
+Case 3
+cx = 0
+cy = 0
+End Select
+DisEnable
+Changed = True
+End If
+
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+If optSize(3) Then
+cx = CLng(txtWidth)
+cy = CLng(txtHeight)
+End If
+Select Case chkMaskColor.Value
+Case 0
+SelectedControls(0).UseMaskColor = False
+Case 1
+SelectedControls(0).UseMaskColor = True
+End Select
+SelectedControls(0).ImageWidth = txtWidth
+SelectedControls(0).ImageHeight = txtHeight
+DoEvents
+End Sub
+
+Private Sub PropertyPage_Paint()
+If Subclassed = False Then SubclassHelpButton
+cx = SelectedControls(0).ImageWidth
+cy = SelectedControls(0).ImageHeight
+If Schange = False Then
+SelectedControls(0).BackColor = SelectedControls(0).BackColor 'first changeproperty destroy the Propertypage
+End If
+setoption
+DisEnable
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+chkMaskColor.Value = Abs(SelectedControls(0).UseMaskColor)
+cx = SelectedControls(0).ImageWidth
+cy = SelectedControls(0).ImageHeight
+optSize(GetTyp).Value = True
+DoEvents
+End Sub
+
+Private Sub PropertyPage_Terminate()
+If bHOOK <> 0 Then SetWindowLong Helpbuttonhwnd, GWL_WNDPROC, bHOOK
+bHOOK = 0
+If wHOOK <> 0 Then SetWindowLong Parenthwnd, GWL_WNDPROC, wHOOK
+wHOOK = 0
+Subclassed = False
+End Sub
+
+Private Sub SubclassHelpButton()
+Dim rc As RECT
+Testnr = 0
+Parenthwnd = GetParent(PropertyPage.hwnd)
+Parenthwnd = GetParent(Parenthwnd)
+EnumChildWindows Parenthwnd, AddressOf EnumChildProc, 12
+MoveWindow Buttonhwnd(1), 116, 317, 100, 28, 1
+MoveWindow Buttonhwnd(2), 224, 317, 100, 28, 1
+MoveWindow Buttonhwnd(3), 332, 317, 100, 28, 1
+SetWindowLong Buttonhwnd(4), (-16), &H50030000
+MoveWindow Buttonhwnd(4), 440, 317, 100, 28, 1
+HasFocus = False
+wHOOK = SetWindowLong(Parenthwnd, GWL_WNDPROC, AddressOf HButtonProc)
+bHOOK = SetWindowLong(Helpbuttonhwnd, GWL_WNDPROC, AddressOf HButtonProc)
+Subclassed = True
+End Sub
+
+Private Sub txtHeight_Change()
+Changed = True
+End Sub
+
+Private Sub txtHeight_GotFocus()
+txtHeight.SelStart = 0
+txtHeight.SelLength = Len(txtHeight)
+End Sub
+
+Private Sub txtWidth_Change()
+Changed = True
+End Sub
+
+Private Sub txtWidth_GotFocus()
+txtWidth.SelStart = 0
+txtWidth.SelLength = Len(txtWidth)
+End Sub
+
+Private Sub setoption()
+If cx = 16 And cy = 16 Then
+optSize(0).Value = True
+Exit Sub
+End If
+
+If cx = 32 And cy = 32 Then
+optSize(1).Value = True
+Exit Sub
+End If
+
+If cx = 48 And cy = 48 Then
+optSize(2).Value = True
+Exit Sub
+End If
+
+optSize(3).Value = True
+txtHeight = cy
+txtWidth = cx
+End Sub
+
+Private Sub DisEnable()
+Dim Farbe As Long
+Dim Doen As Boolean
+
+If optSize(3).Value = True And Anzahl < 1 Then Doen = True
+
+Select Case Doen
+Case False
+Farbe = lblHeight.BackColor
+Case True
+Farbe = vbWhite
+End Select
+
+txtHeight.Enabled = Doen
+txtHeight.BackColor = Farbe
+txtWidth.Enabled = Doen
+txtWidth.BackColor = Farbe
+txtHeight = cy
+txtWidth = cx
+DoEvents
+End Sub
+
+
+
+Private Function GetTyp() As Long
+GetTyp = 3
+If cx = 16 And cy = 16 Then GetTyp = 0
+If cx = 32 And cy = 32 Then GetTyp = 1
+If cx = 48 And cy = 48 Then GetTyp = 2
+End Function
