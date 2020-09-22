@@ -1,0 +1,575 @@
+VERSION 5.00
+Begin VB.PropertyPage ppgImages 
+   Caption         =   "Abbildungen"
+   ClientHeight    =   3168
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   6000
+   BeginProperty Font 
+      Name            =   "Tahoma"
+      Size            =   8.4
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
+   HelpContextID   =   12
+   LockControls    =   -1  'True
+   PaletteMode     =   0  'Rasterbild
+   ScaleHeight     =   3168
+   ScaleWidth      =   6000
+   Begin VB.TextBox txtAnz 
+      BackColor       =   &H80000004&
+      Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   288
+      Left            =   5040
+      Locked          =   -1  'True
+      TabIndex        =   10
+      TabStop         =   0   'False
+      Text            =   "0"
+      Top             =   2568
+      Width           =   840
+   End
+   Begin VB.CommandButton cmdRemPic 
+      Caption         =   "Bild ent&fernen"
+      Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   360
+      Left            =   1676
+      TabIndex        =   8
+      Top             =   2544
+      Width           =   1440
+   End
+   Begin VB.CommandButton cmdAddPic 
+      Caption         =   "Bild &einfügen..."
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   360
+      Left            =   116
+      TabIndex        =   7
+      Top             =   2544
+      Width           =   1440
+   End
+   Begin VB.Frame fraAbb 
+      Caption         =   "Aktuelle Abbildung"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   1152
+      Left            =   116
+      TabIndex        =   11
+      Top             =   48
+      Width           =   5712
+      Begin VB.TextBox txtTag 
+         BackColor       =   &H80000004&
+         Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   288
+         Left            =   2424
+         TabIndex        =   5
+         Top             =   672
+         Width           =   3096
+      End
+      Begin VB.TextBox txtKey 
+         BackColor       =   &H80000004&
+         Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   288
+         Left            =   2424
+         TabIndex        =   3
+         Top             =   288
+         Width           =   3096
+      End
+      Begin VB.TextBox txtIndex 
+         BackColor       =   &H80000004&
+         Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   288
+         Left            =   720
+         TabIndex        =   1
+         Text            =   "0"
+         Top             =   312
+         Width           =   552
+      End
+      Begin VB.Label lblMarke 
+         Caption         =   "&Tag:"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   192
+         Left            =   1512
+         TabIndex        =   4
+         Top             =   720
+         Width           =   624
+      End
+      Begin VB.Label lblKey 
+         Caption         =   "&Key:"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   192
+         Left            =   1512
+         TabIndex        =   2
+         Top             =   336
+         Width           =   840
+      End
+      Begin VB.Label lblIndex 
+         Caption         =   "&Index:"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   7.8
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   192
+         Left            =   168
+         TabIndex        =   0
+         Top             =   336
+         Width           =   528
+      End
+   End
+   Begin VB.Label lblAbb 
+      Caption         =   "&Abbildungen:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   192
+      Left            =   116
+      TabIndex        =   6
+      Top             =   1272
+      Width           =   1224
+   End
+   Begin VB.Label lblAnz 
+      Caption         =   "Anzahl Abbildungen"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   7.8
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   192
+      Left            =   3240
+      TabIndex        =   9
+      Top             =   2616
+      Width           =   1584
+   End
+End
+Attribute VB_Name = "ppgImages"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+Private Declare Function GetTempFileName Lib "kernel32" Alias "GetTempFileNameA" (ByVal lpszPath As String, ByVal lpPrefixString As String, ByVal wUnique As Long, ByVal lpTempFileName As String) As Long
+Private Declare Function GetTempPath Lib "kernel32" Alias "GetTempPathA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
+Private Declare Function DeleteFile Lib "kernel32" Alias "DeleteFileA" (ByVal lpFileName As String) As Long
+Private LBHwnd As Long
+Private hIml As Long
+Private Nr As Long
+Private SelPicture As Long
+Private KeyChange As Boolean
+Private TagChange As Boolean
+Private Jump As Boolean
+
+Private Sub cmdAddPic_Click()
+Dim Oldsel As Long
+Dim Back As Long
+Dim Filename As String
+Dim i As Long
+Dim AnzAlt As Long
+Dim TempKey As String
+Dim TempTag As String
+Dim FileAr() As Byte
+Dim Filenr As Long
+Dim Def(0) As Byte
+Dim Tempname As String
+
+  Back = GetKeyState(&H12) And &HF0000000
+  If Back <> 0 Then
+  Back = GetKeyState(65) And &HF0000000
+  End If
+  If Back <> 0 Then
+  If CLng(txtIndex) > 0 Then
+  First = 1
+  SetFocusA LBHwnd
+  Back = SendMessage(LBHwnd, LB_SETCURSEL, CLng(txtIndex) - 1, 0)
+  Exit Sub
+  End If
+  End If
+
+Oldsel = SelPicture
+Filename = GetFilename()
+If Filename <> "" Then
+AnzAlt = ImageListAdd(hIml, Filename, cx, cy, , 1)
+If AnzAlt > -1 Then
+Filenr = FreeFile
+Open Filename For Binary As Filenr
+ReDim FileAr(LOF(Filenr) - 1)
+Get Filenr, , FileAr
+Close Filenr
+PP.WriteProperty AnzAlt & "i", FileAr, Def
+
+Select Case AnzAlt
+Case 0
+SelPicture = 1
+ReDim ImgArr(1)
+ImgArr(1) = AnzAlt
+If SelectedControls(0).ImageWidth <> cx And SelectedControls(0).ImageWidth = 0 Then
+SelectedControls(0).ImageWidth = cx
+End If
+If SelectedControls(0).ImageHeight <> cy And SelectedControls(0).ImageHeight = 0 Then
+SelectedControls(0).ImageHeight = cy
+End If
+ReDim TagArr(1)
+ReDim KeyArr(1)
+
+Case Else
+ReDim Preserve TagArr(AnzAlt + 1)
+ReDim Preserve KeyArr(AnzAlt + 1)
+ReDim Preserve ImgArr(AnzAlt + 1)
+For i = AnzAlt + 1 To SelPicture + 1 Step -1
+KeyArr(i) = KeyArr(i - 1)
+TagArr(i) = TagArr(i - 1)
+ImgArr(i) = ImgArr(i - 1)
+Next i
+KeyArr(SelPicture + 1) = ""
+TagArr(SelPicture + 1) = ""
+ImgArr(SelPicture + 1) = AnzAlt
+End Select
+
+Anzahl = Anzahl + 1
+Call SendMessage(LBHwnd, LB_ADDSTRING, -1, ByVal "")
+SendMessage LBHwnd, LB_SETCURSEL, SelPicture, 0
+DoEvents
+txtAnz.Text = CStr(Anzahl)
+txtIndex.Text = Oldsel + 1
+Nr = Nr + 1
+End If
+End If
+End Sub
+
+Private Sub cmdRemPic_Click()
+Dim i As Long
+Dim Oldsel As Long
+Dim Oldnum As Long
+
+If Anzahl > 0 Then
+Oldsel = SelPicture
+ImagelistRemove hIml, SelPicture
+Nr = Nr - 1
+Anzahl = Anzahl - 1
+If SelPicture > Anzahl Then
+SelPicture = Anzahl
+txtIndex = Anzahl
+End If
+For i = Oldsel To Anzahl
+KeyArr(i) = KeyArr(i + 1)
+TagArr(i) = TagArr(i + 1)
+ImgArr(i) = ImgArr(i + 1)
+If ImgArr(i) >= Oldsel Then ImgArr(i) = ImgArr(i) - 1
+Next i
+ReDim Preserve KeyArr(Anzahl)
+For i = 1 To UBound(KeyArr)
+Debug.Print KeyArr(i)
+Next i
+ReDim Preserve TagArr(Anzahl)
+ReDim Preserve ImgArr(Anzahl)
+txtAnz.Text = CStr(Anzahl)
+txtKey = KeyArr(SelPicture)
+txtTag = TagArr(SelPicture)
+Call SendMessage(LBHwnd, LB_DELETESTRING, SelPicture, 0)
+SendMessage LBHwnd, LB_SETCURSEL, SelPicture - 1, 0
+If Anzahl = 0 Then
+Changed = False
+txtIndex.Text = 0
+DestroyImageList Imagelist
+Imagelist = 0
+cx = 0
+cy = 0
+SelectedControls(0).ImageHeight = 0
+SelectedControls(0).ImageWidth = 0
+txtKey = ""
+txtTag = ""
+End If
+End If
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+Dim DStr As String
+Dim i As Long
+Dim k As String
+Dim t As String
+Dim akt As Long
+akt = CLng(txtIndex)
+If KeyChange Then
+If txtKey <> KeyArr(akt) Then
+KeyArr(akt) = txtKey
+End If
+KeyChange = False
+End If
+If TagChange Then
+If txtTag <> TagArr(akt) Then
+TagArr(akt) = txtTag
+End If
+TagChange = False
+End If
+TagChange = False
+KeyChange = False
+End Sub
+
+Private Sub PropertyPage_Paint()
+Dim i As Long
+Dim Back As Long
+Dim Tempname As String
+Dim Def(0) As Byte
+Dim Filenr  As Long
+Dim k As String
+Dim t As String
+Dim DStr As String
+Dim PicBArray() As Byte
+If Anzahl > 0 And Ini = False Then
+Ini = True
+
+Tempname = GetTempName
+Filenr = FreeFile
+For i = 1 To Anzahl
+PicBArray = PP.ReadProperty(ImgArr(i) & "i", Def)
+Open Tempname For Binary As Filenr
+Put Filenr, , PicBArray
+Close Filenr
+Back = ImageListAdd(hIml, Tempname, cx, cy, , 1)
+DeleteFile Tempname
+Next i
+End If
+
+
+If LBHwnd = 0 Then
+LBHwnd = InitListBox(PropertyPage.hwnd, 12, 124, 476, 78, txtIndex, txtTag.hwnd, cmdAddPic.hwnd, cmdRemPic.hwnd)
+For i = 1 To Anzahl
+Call SendMessage(LBHwnd, LB_ADDSTRING, -1, ByVal "")
+Next i
+SendMessage LBHwnd, LB_SETCURSEL, 1, 0
+End If
+Nr = 0
+If Anzahl > 0 Then
+cx = SelectedControls(0).ImageWidth
+cy = SelectedControls(0).ImageHeight
+txtIndex = 1
+txtAnz = Anzahl
+EnableControls True
+End If
+
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+If Anzahl > 0 Then SelPicture = 1
+End Sub
+
+Private Sub txtAnz_Change()
+Select Case txtAnz
+Case 0
+EnableControls False
+Case Else
+EnableControls True
+End Select
+End Sub
+
+Private Sub txtIndex_Change()
+Dim c As Long
+Dim Tempstring As String
+Dim i As Long
+Dim DStr As String
+Dim aName As String
+ReDim Preserve KeyArr(Anzahl)
+ReDim Preserve TagArr(Anzahl)
+aName = ImgArr(SelPicture)
+If KeyChange = True Then
+If KeyArr(SelPicture) <> txtKey Then
+Tempstring = txtKey
+KeyArr(SelPicture) = Tempstring
+c = 1
+End If
+KeyChange = False
+End If
+
+If TagChange = True Then
+If TagArr(SelPicture) <> txtTag Then
+Tempstring = txtTag
+TagArr(SelPicture) = txtTag
+c = 1
+End If
+TagChange = False
+End If
+If c = 0 Then
+Changed = False
+Else
+Changed = False
+End If
+If Anzahl > 0 Then
+If Len(txtIndex.Text) > 5 Then txtIndex.Text = 1
+If IsNumeric(txtIndex.Text) = False Then txtIndex.Text = 1
+If CLng(txtIndex.Text) <= 0 Then txtIndex.Text = 1
+If CLng(txtIndex.Text) > Anzahl Then txtIndex.Text = Anzahl
+txtIndex.Text = CLng(txtIndex)
+Jump = True
+SelPicture = CLng(txtIndex.Text)
+If LBHwnd <> 0 Then SendMessage LBHwnd, LB_SETCURSEL, CLng(txtIndex.Text) - 1, 0
+If UBound(KeyArr) > 0 Then
+txtKey.Text = KeyArr(CLng(txtIndex))
+txtTag.Text = TagArr(CLng(txtIndex))
+End If
+End If
+Jump = False
+
+End Sub
+
+Private Sub EnableControls(WhatDo As Boolean)
+Dim Color As Long
+
+txtIndex.Enabled = WhatDo
+txtKey.Enabled = WhatDo
+txtTag.Enabled = WhatDo
+cmdRemPic.Enabled = WhatDo
+txtIndex.TabStop = WhatDo
+txtKey.TabStop = WhatDo
+txtTag.TabStop = WhatDo
+cmdRemPic.TabStop = WhatDo
+Select Case WhatDo
+Case False
+Color = lblAnz.BackColor
+Case True
+Color = vbWhite
+End Select
+txtIndex.BackColor = Color
+txtKey.BackColor = Color
+txtTag.BackColor = Color
+End Sub
+
+Private Sub txtIndex_GotFocus()
+txtIndex.SelStart = 0
+txtIndex.SelLength = Len(txtIndex.Text)
+End Sub
+
+Private Sub txtKey_Change()
+If Jump = False Then
+If KeyArr(CLng(txtIndex)) <> txtKey Then
+KeyChange = True
+Changed = True
+End If
+End If
+End Sub
+
+Private Sub txtKey_GotFocus()
+txtKey.SelStart = 0
+txtKey.SelLength = Len(txtKey.Text)
+End Sub
+
+Private Sub txtTag_Change()
+
+If Jump = False Then
+If TagArr(CLng(txtIndex)) <> txtKey Then
+TagChange = True
+Changed = True
+End If
+End If
+End Sub
+
+Private Sub txtTag_GotFocus()
+txtTag.SelStart = 0
+txtTag.SelLength = Len(txtTag.Text)
+End Sub
+
+Private Function GetTempName() As String
+Dim pa As String
+Dim fn As String
+Dim Back As Long
+
+pa = Space(260)
+fn = Space(260)
+Back = GetTempPath(260, pa)
+pa = Left(pa, Back)
+Back = GetTempFileName(pa, "$", 0, fn)
+fn = Left$(fn, InStr(1, fn, Chr$(0)) - 1)
+GetTempName = fn
+DeleteFile fn
+End Function
+

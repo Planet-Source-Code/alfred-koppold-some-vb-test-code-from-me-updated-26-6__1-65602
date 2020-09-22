@@ -1,0 +1,19 @@
+That are some testprojekts from me:
+The most testprojekts works on a german system (Win98 but i think also on Win XP).
+The projekts are !!!not!!! complete.
+In the last month i had no time and so i can't write on it.
+I hope some peoples need something from this projekts and the projekts helps.
+Also i hope some peoples can complete my projekts and send this projekts to my email-address (alfred.koppold@freenet.de)
+ 
+CD-Printer: Print on CD's !!Works only for Printers Canon Pixma ip 3000 (and some newer)
+NewAboutBox: Make About-Box without Form.
+New CMDialog: Test to make my own Dialogs with the MS CommonDialog-ocx
+Outlook-Control: My tests for a Outlook-Control (Based on a article in the german basicpro).
+My Imagelist_Test: Make my own Imagelist-ocx (based on the MS-Imagelist) - Not complete.
+Read True Type Font: Read True Type Font (Byte for Byte) and print it on the screen only with Painting-Commands
+GetTypelib: Read Typelib without any other file from tlb, ocx, dll....
+NewTwain_Scanner_Class: A class to use the (Twain)Scanner without any dll / the class is based on a idea from Lumir Mik
+(look at http://www.sweb.cz/lmik/mdlTwain.zip)
+SavePngwithASM: Save pictures to PNG-format (24 and 8 bit). Without (not so fast and it has a bug with bigger pictures) and with the zlib.dll (faster).
+Update 26.6.2006:
+Cur_Ico_Tests: Read Icons and Cursors / save Cursor

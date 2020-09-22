@@ -1,0 +1,298 @@
+VERSION 5.00
+Begin VB.PropertyPage Eigenschaften 
+   Caption         =   "Spalteneigenschaften"
+   ClientHeight    =   3492
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   5928
+   PaletteMode     =   0  'Rasterbild
+   ScaleHeight     =   3492
+   ScaleWidth      =   5928
+   Begin VB.CommandButton Command1 
+      Caption         =   "Schrift auswählen"
+      Height          =   612
+      Left            =   240
+      TabIndex        =   13
+      Top             =   2400
+      Width           =   1572
+   End
+   Begin VB.Frame Frame1 
+      Caption         =   "Stil"
+      Height          =   1572
+      Left            =   3600
+      TabIndex        =   9
+      Top             =   360
+      Width           =   1572
+      Begin VB.OptionButton Option1 
+         Caption         =   "Nur Text"
+         Height          =   252
+         Index           =   2
+         Left            =   120
+         TabIndex        =   12
+         Top             =   1080
+         Width           =   1332
+      End
+      Begin VB.OptionButton Option1 
+         Caption         =   "Nur Bild"
+         Height          =   252
+         Index           =   1
+         Left            =   120
+         TabIndex        =   11
+         Top             =   720
+         Width           =   1332
+      End
+      Begin VB.OptionButton Option1 
+         Caption         =   "Bild und Text"
+         Height          =   252
+         Index           =   0
+         Left            =   120
+         TabIndex        =   10
+         Top             =   360
+         Width           =   1332
+      End
+   End
+   Begin VB.PictureBox Picture1 
+      Appearance      =   0  '2D
+      BackColor       =   &H80000000&
+      BorderStyle     =   0  'Kein
+      ForeColor       =   &H80000008&
+      Height          =   372
+      Left            =   2520
+      ScaleHeight     =   31
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   31
+      TabIndex        =   8
+      Top             =   1560
+      Width           =   372
+   End
+   Begin VB.VScrollBar VScroll2 
+      Height          =   372
+      Left            =   2280
+      Max             =   0
+      Min             =   9
+      TabIndex        =   7
+      Top             =   1560
+      Value           =   1
+      Width           =   132
+   End
+   Begin VB.VScrollBar VScroll1 
+      Height          =   372
+      Left            =   2160
+      TabIndex        =   6
+      Top             =   480
+      Width           =   132
+   End
+   Begin VB.TextBox txtPicture 
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   1800
+      TabIndex        =   5
+      Text            =   "1"
+      Top             =   1560
+      Width           =   372
+   End
+   Begin VB.TextBox txtCaption 
+      Height          =   375
+      Left            =   1680
+      TabIndex        =   3
+      Text            =   "Column1"
+      Top             =   960
+      Width           =   1335
+   End
+   Begin VB.TextBox txtIndexNummer 
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   1680
+      TabIndex        =   0
+      Text            =   "1"
+      Top             =   480
+      Width           =   375
+   End
+   Begin VB.Label Label3 
+      Caption         =   "Picture"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   4
+      Top             =   1560
+      Width           =   1455
+   End
+   Begin VB.Label Label2 
+      Caption         =   "Beschriftung"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   2
+      Top             =   960
+      Width           =   1335
+   End
+   Begin VB.Label Label1 
+      Caption         =   "Spaltennummer"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   1
+      Top             =   480
+      Width           =   1095
+   End
+End
+Attribute VB_Name = "Eigenschaften"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+Private Type Changes
+Text As String
+Gewechselt As Boolean
+Picture As Long
+Stil As Long
+Schriftart As String
+Schriftfarbe As Long
+Schriftsize As Long
+Unterstrichen As Boolean
+Durchgestrichen As Boolean
+Bold As Boolean
+Italic As Boolean
+End Type
+Private Wechselarray() As Changes
+Private FirstChange As Boolean
+Dim NotFirst As Boolean
+Private mStil As Long
+
+Private Sub Command1_Click()
+
+Dim Schrift As New FontViewDLG
+Schrift.Show SelectedControls(0).ColumnFontColor(txtIndexNummer.Text), SelectedControls(0).ColumnFontSize(txtIndexNummer.Text), SelectedControls(0).ColumnFontname(txtIndexNummer.Text), SelectedControls(0).ColumnItalic(txtIndexNummer.Text), SelectedControls(0).ColumnBold(txtIndexNummer.Text), SelectedControls(0).ColumnUnderline(txtIndexNummer.Text), SelectedControls(0).ColumnStrikeout(txtIndexNummer.Text)
+Wechselarray(CLng(txtIndexNummer.Text)).Schriftart = Schrift.FontName
+Wechselarray(CLng(txtIndexNummer.Text)).Picture = txtPicture.Text
+Wechselarray(CLng(txtIndexNummer.Text)).Text = txtCaption.Text
+Wechselarray(CLng(txtIndexNummer.Text)).Stil = mStil
+Wechselarray(CLng(txtIndexNummer.Text)).Bold = Schrift.Bold
+Wechselarray(CLng(txtIndexNummer.Text)).Italic = Schrift.Italic
+Wechselarray(CLng(txtIndexNummer.Text)).Schriftfarbe = Schrift.Color
+Wechselarray(CLng(txtIndexNummer.Text)).Schriftsize = Schrift.FontSize
+Wechselarray(CLng(txtIndexNummer.Text)).Unterstrichen = Schrift.Underline
+Wechselarray(CLng(txtIndexNummer.Text)).Durchgestrichen = Schrift.StrikeOut
+Wechselarray(CLng(txtIndexNummer.Text)).Gewechselt = True
+Changed = True
+Set Schrift = Nothing
+End Sub
+
+Private Sub Option1_Click(Index As Integer)
+Dim Test As Long
+Test = SelectedControls(0).ColumnStil(CLng(txtIndexNummer.Text))
+If CLng(Index) <> Test Then
+Changed = True
+End If
+mStil = Index
+
+End Sub
+
+Private Sub txtPicture_Change()
+Dim Test As Long
+Test = SelectedControls(0).ColumnPicture(CLng(txtIndexNummer.Text))
+If CLng(txtPicture.Text) <> Test Then
+Changed = True
+End If
+Drawpic txtPicture
+End Sub
+
+Private Sub txtIndexNummer_Change()
+If Wechselarray(txtIndexNummer).Gewechselt = False Then
+txtCaption.Text = SelectedControls(0).ColumnCaption(CLng(txtIndexNummer.Text))
+txtPicture.Text = SelectedControls(0).ColumnPicture(CLng(txtIndexNummer.Text))
+Option1(SelectedControls(0).ColumnStil(CLng(txtIndexNummer.Text))) = True
+
+Else
+txtCaption.Text = Wechselarray(txtIndexNummer).Text
+txtPicture.Text = Wechselarray(txtIndexNummer).Picture
+Option1((Wechselarray(txtIndexNummer).Stil)) = True
+End If
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+Dim i As Long
+For i = 1 To SelectedControls(0).Columns
+If Wechselarray(i).Gewechselt = True Then
+SelectedControls(0).ColumnCaption(i) = Wechselarray(i).Text
+SelectedControls(0).ColumnPicture(i) = Wechselarray(i).Picture
+SelectedControls(0).ColumnStil(i) = Wechselarray(i).Stil
+SelectedControls(0).ColumnFontname(i) = Wechselarray(i).Schriftart
+SelectedControls(0).ColumnBold(i) = Wechselarray(i).Bold
+SelectedControls(0).ColumnItalic(i) = Wechselarray(i).Italic
+SelectedControls(0).ColumnFontColor(i) = Wechselarray(i).Schriftfarbe
+SelectedControls(0).ColumnUnderline(i) = Wechselarray(i).Unterstrichen
+SelectedControls(0).ColumnFontSize(i) = Wechselarray(i).Schriftsize
+SelectedControls(0).ColumnStrikeout(i) = Wechselarray(i).Durchgestrichen
+End If
+Next i
+If Wechselarray(txtIndexNummer.Text).Gewechselt = False Then
+SelectedControls(0).ColumnCaption(CLng(txtIndexNummer.Text)) = txtCaption.Text
+SelectedControls(0).ColumnPicture(CLng(txtIndexNummer.Text)) = txtPicture.Text
+SelectedControls(0).ColumnStil(CLng(txtIndexNummer.Text)) = mStil
+End If
+End Sub
+
+Private Sub PropertyPage_Paint()
+If NotFirst = False Then
+FirstChange = True
+txtCaption.Text = SelectedControls(0).ColumnCaption(CLng(txtIndexNummer.Text))
+txtPicture.Text = SelectedControls(0).ColumnPicture(CLng(txtIndexNummer.Text))
+Option1(SelectedControls(0).ColumnStil(CLng(txtIndexNummer.Text))).Value = True
+mStil = SelectedControls(0).ColumnStil(CLng(txtIndexNummer.Text))
+VScroll1.Max = 1
+VScroll1.Min = SelectedControls(0).Columns
+VScroll2.Value = CLng(txtPicture.Text)
+Picture1.Width = 32 * Screen.TwipsPerPixelX
+Picture1.Height = 32 * Screen.TwipsPerPixelY
+Drawpic (txtIndexNummer)
+End If
+NotFirst = True
+End Sub
+
+
+Private Sub txtcaption_Change()
+Dim Test As String
+Test = SelectedControls(0).ColumnCaption(CLng(txtIndexNummer.Text))
+If txtCaption.Text <> Test Then
+Changed = True
+End If
+End Sub
+
+Private Sub VScroll1_Change()
+ReDim Preserve Wechselarray(1 To SelectedControls(0).Columns)
+If FirstChange = False Then
+Wechselarray(txtIndexNummer.Text).Text = txtCaption.Text
+Wechselarray(txtIndexNummer.Text).Picture = CLng(txtPicture.Text)
+Wechselarray(txtIndexNummer.Text).Stil = mStil
+Wechselarray(txtIndexNummer.Text).Gewechselt = True
+txtIndexNummer.Text = VScroll1.Value
+End If
+FirstChange = False
+End Sub
+
+Private Sub VScroll2_Change()
+txtPicture.Text = VScroll2.Value
+End Sub
+
+Public Sub Drawpic(Number As Long)
+    'Bitmaps zeichnen
+    Dim c As StdPicture
+    Dim d As Long
+    Dim rc As RECT
+'Bitmap in Speicher laden
+Set c = LoadResPicture(101, vbResBitmap)
+
+d = LoadBitmapIntoMemory(c)
+
+
+          
+          With rc
+   .Left = Number * 16
+   .Top = 0
+   .Right = (Number + 1) * 16 'Picture1.ScaleWidth
+   .Bottom = 15 'Picture1.ScaleHeight
+  End With
+  Picture1.AutoRedraw = True
+  Picture1.Cls
+ TransparentBlt Picture1.hDC, Picture1.hDC, d, rc, 0, 0, RGB(255, 0, 255)
+Picture1.AutoRedraw = False
+End Sub
